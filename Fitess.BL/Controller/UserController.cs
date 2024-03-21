@@ -60,7 +60,7 @@ namespace Fitess.BL.Controller
             var formatter = new BinaryFormatter();
             using (var fc = new FileStream("users.dat", FileMode.OpenOrCreate))
             {
-                if (formatter.Deserialize(fc) is List<User> users)
+                if (fc.Length>0 && formatter.Deserialize(fc) is List<User> users)
                 {
                     return users;
                 }
