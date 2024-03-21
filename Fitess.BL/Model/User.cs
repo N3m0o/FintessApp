@@ -1,13 +1,19 @@
 ﻿namespace Fitess.BL.Model
 {
+    [Serializable]
     public class User
     {
         #region Properties
         public string Name { get; }
-        public Gender Gender { get; }
-        public DateTime? BirthDate { get; }
+        public Gender Gender { get; set; }
+        public DateTime BirthDate { get; set; }
         public double Weight { get; set; }
         public double Height { get; set; }
+        public int Age
+        {
+            get { return DateTime.Now.Year - BirthDate.Year; }
+            set { }
+        }
         #endregion
 
         /// <summary>
@@ -27,23 +33,23 @@
                    , double heigth)
         {
             #region Checking values
-            if (string.IsNullOrWhiteSpace(name)) 
+            if (string.IsNullOrWhiteSpace(name))
             {
-              throw new ArgumentNullException("Username entered incorrectly", nameof(name));
+                throw new ArgumentNullException("Username entered incorrectly", nameof(name));
             }
-            if (gender == null) 
+            if (gender == null)
             {
                 throw new ArgumentNullException("Gender cannot be equal null", nameof(gender));
             }
-            if (birthDate <DateTime.Parse("01.01.1900") || birthDate >= DateTime.Now) 
+            if (birthDate < DateTime.Parse("01.01.1900") || birthDate >= DateTime.Now)
             {
                 throw new ArgumentException("Date of birth entered incorrectly", nameof(birthDate));
             }
-            if (weight < 0) 
+            if (weight < 0)
             {
                 throw new ArgumentException("weight cannot be less than one", nameof(weight));
             }
-            if (heigth <= 0) 
+            if (heigth <= 0)
             {
                 throw new ArgumentException("height cannot be less than one", nameof(heigth));
             }
@@ -52,12 +58,20 @@
             Name = name;
             Gender = gender;
             BirthDate = birthDate;
-            Weight = weight; 
+            Weight = weight;
             Height = heigth;
+        }
+        public User(string name)
+        {
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                throw new ArgumentNullException("Username entered incorrectly", nameof(name));
+            }
+            Name = name;
         }
         public override string ToString()
         {
-            return Name;
+            return Name + " " + Age;
         }
     }
 }
