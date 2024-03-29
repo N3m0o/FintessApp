@@ -1,16 +1,16 @@
 ﻿using Fitess.BL.Model;
-using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Fitess.BL.Controller
 {
     /// <summary>
     /// User controller
     /// </summary>
-    public class UserController
+    public class UserController : ControllerBase
     {
         /// <summary>
         /// Users
         /// </summary>
+        private const string USERS_FILE_NAME = "users.dat";
         public List<User> Users { get; }
         public User CurrentUser { get; }
         public bool IsNewUser { get; } = false;
@@ -43,12 +43,7 @@ namespace Fitess.BL.Controller
         /// </summary>
         public void Save()
         {
-#pragma warning disable SYSLIB0011
-            var formatter = new BinaryFormatter();
-            using (var fc = new FileStream("users.dat", FileMode.OpenOrCreate))
-            {
-                formatter.Serialize(fc, Users);
-            }
+            Save(USERS_FILE_NAME,Users);
         }
         /// <summary>
         /// Get user data.
@@ -57,25 +52,14 @@ namespace Fitess.BL.Controller
         /// <exception cref="FileLoadException"></exception>
         private List<User> GetUsersData()
         {
-            var formatter = new BinaryFormatter();
-            using (var fc = new FileStream("users.dat", FileMode.OpenOrCreate))
-            {
-                if (fc.Length>0 && formatter.Deserialize(fc) is List<User> users)
-                {
-                    return users;
-                }
-                else
-                {
-                    return new List<User>();
-                }
-            }
+            return Load<List<User>>(USERS_FILE_NAME) ?? new List<User>();
         }
         public void SetNewUserData(string genderName, DateTime birthDate, double weight = 1, double height = 1)
         {
             CurrentUser.Gender = new Gender(genderName);
             CurrentUser.BirthDate = birthDate;
             CurrentUser.Weight = weight;
-            CurrentUser.Height = height;    
+            CurrentUser.Height = height;
             Save();
         }
     }
