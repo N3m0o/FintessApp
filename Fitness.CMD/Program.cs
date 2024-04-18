@@ -1,5 +1,7 @@
 ﻿using Fitess.BL.Controller;
 using Fitess.BL.Model;
+using System.Globalization;
+using System.Resources;
 
 namespace Fitness.CMD
 {
@@ -7,10 +9,12 @@ namespace Fitness.CMD
     {
         public static void Main(string[] args)
         {
+            var culture = CultureInfo.CreateSpecificCulture("en-us");
+            var resourceManager = new ResourceManager("Fitness.CMD.Languages.Masseges", typeof(Program).Assembly);
 
-            Console.WriteLine("Вас приветствует приложение:");
+            Console.WriteLine(resourceManager.GetString("Hello",culture));
 
-            Console.WriteLine("Введите имя пользователя");
+            Console.WriteLine(resourceManager.GetString("EnterName",culture));
             var name = Console.ReadLine();
 
             var userController = new UserController(name);
