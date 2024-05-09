@@ -15,7 +15,9 @@ namespace Fitess.BL.Model
         /// <summary>
         ///  Gender name
         /// </summary>
-        public string Name { get;}
+        public int Id { get; set; }
+        public virtual ICollection<User> Users { get; set; }
+        public string Name { get; set; }
         /// <summary>
         /// Set gender 
         /// </summary>
@@ -30,6 +32,7 @@ namespace Fitess.BL.Model
             }
             Name = name;
         }
+        public Gender() { }
         public override string ToString()
         {
             return Name;

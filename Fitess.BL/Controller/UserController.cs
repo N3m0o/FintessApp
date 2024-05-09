@@ -10,7 +10,7 @@ namespace Fitess.BL.Controller
         /// <summary>
         /// Users
         /// </summary>
-        private const string USERS_FILE_NAME = "users.dat";
+
         public List<User> Users { get; }
         public User CurrentUser { get; }
         public bool IsNewUser { get; } = false;
@@ -43,7 +43,7 @@ namespace Fitess.BL.Controller
         /// </summary>
         public void Save()
         {
-            Save(USERS_FILE_NAME,Users);
+            Save(Users);
         }
         /// <summary>
         /// Get user data.
@@ -52,7 +52,7 @@ namespace Fitess.BL.Controller
         /// <exception cref="FileLoadException"></exception>
         private List<User> GetUsersData()
         {
-            return Load<List<User>>(USERS_FILE_NAME) ?? new List<User>();
+            return Load<User>() ?? new List<User>();
         }
         public void SetNewUserData(string genderName, DateTime birthDate, double weight = 1, double height = 1)
         {

@@ -4,11 +4,9 @@ namespace Fitess.BL.Controller
 {
     public class EatingController : ControllerBase
     {
-        private const string FOODS_FILE_NAME = "users.dat";
-        private const string EATINGS_FILE_NAME = "eatings.dat";
         private readonly User User;
-        public List<Food> Foods { get; }
-        public Eating Eating { get; }
+        public List<Food> Foods { get; set; }
+        public Eating Eating { get; set; }
         public EatingController(User user)
         {
             User = user ?? throw new ArgumentNullException("User name cannot me empty", nameof(user));
@@ -33,17 +31,17 @@ namespace Fitess.BL.Controller
 
         private Eating GetEating()
         {
-            return Load<Eating>(EATINGS_FILE_NAME) ?? new Eating(User);
+            return Load<Eating>().FirstOrDefault() ?? new Eating(User);
         }
 
         private List<Food> GetAllFoods()
         {
-            return Load<List<Food>>(FOODS_FILE_NAME) ?? new List<Food>();
+            return Load<Food>() ?? new List<Food>();
         }
         private void Save()
         {
-            Save(FOODS_FILE_NAME, Foods);
-            Save(EATINGS_FILE_NAME, Eating);
+            Save(Foods);
+            Save(new List<Eating>() { Eating });
         }
     }
 }

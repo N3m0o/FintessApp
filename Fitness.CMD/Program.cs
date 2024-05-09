@@ -1,7 +1,9 @@
 ﻿using Fitess.BL.Controller;
 using Fitess.BL.Model;
+using System.Configuration;
 using System.Data;
 using System.Globalization;
+using System.Reflection;
 using System.Resources;
 
 namespace Fitness.CMD
@@ -33,8 +35,12 @@ namespace Fitness.CMD
                 userController.SetNewUserData(gender, bithdate, weight, height);
             }
 
+            Console.WriteLine(userController.CurrentUser);
+
+
             while (true)
             {
+               
                 Console.WriteLine(userController.CurrentUser);
 
                 Console.WriteLine("Что вы хотите сделать?");
@@ -133,7 +139,7 @@ namespace Fitness.CMD
         }
 
 
-
+       
 
     }
 

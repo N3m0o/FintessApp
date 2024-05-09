@@ -4,16 +4,17 @@
     public class User
     {
         #region Properties
-        public string Name { get; }
-        public Gender Gender { get; set; }
-        public DateTime BirthDate { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set;  }
+        public int? GenderId { get; set; }
+        public virtual Gender Gender { get; set; }
+        public DateTime BirthDate { get; set; } = DateTime.Now;
         public double Weight { get; set; }
         public double Height { get; set; }
-        public int Age
-        {
-            get { return DateTime.Now.Year - BirthDate.Year; }
-            set { }
-        }
+        public virtual ICollection<Eating> Eatings { get; set; }
+        public virtual ICollection<Exercise> Exercises { get; set; }
+
+        public int Age { get { return DateTime.Now.Year - BirthDate.Year; } }
         #endregion
 
         /// <summary>
@@ -69,6 +70,7 @@
             }
             Name = name;
         }
+        public User() { }
         public override string ToString()
         {
             return Name + " " + Age;
